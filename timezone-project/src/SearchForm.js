@@ -11,11 +11,11 @@ export default function SearchForm({ onQuery, searchCity }) {
 	function retrieveTimezone(event) {
 		event.preventDefault();
 		searchCity(searchTerm);
-		const url = `https://api.api-ninjas.com/v1/worldtime?city=${searchTerm}`;
+		const searchTermUrl = `https://api.api-ninjas.com/v1/worldtime?city=${searchTerm}`;
 		const config = {
 			headers: { "X-Api-Key": "GLrblK58I6vRrtKkxoIY9w==LlvQ2p4tauUtQZaK" },
 		};
-		axios.get(url, config).then((result) => {
+		axios.get(searchTermUrl, config).then((result) => {
 			if (result) {
 				onQuery(result);
 			}
@@ -23,15 +23,16 @@ export default function SearchForm({ onQuery, searchCity }) {
 	}
 
 	function handleCurrent(event) {
+		//browser geolocation to access timezone date via coordinates
 		event.preventDefault();
 		navigator.geolocation.getCurrentPosition((position) => {
 			let lon = position.coords.longitude;
 			let lat = position.coords.latitude;
-			const url = `https://api.api-ninjas.com/v1/worldtime?lon=${lon}&lat=${lat}`;
+			const coordsUrl = `https://api.api-ninjas.com/v1/worldtime?lon=${lon}&lat=${lat}`;
 			const config = {
 				headers: { "X-Api-Key": "GLrblK58I6vRrtKkxoIY9w==LlvQ2p4tauUtQZaK" },
 			};
-			axios.get(url, config).then((result) => {
+			axios.get(coordsUrl, config).then((result) => {
 				if (result) {
 					onQuery(result);
 				}
